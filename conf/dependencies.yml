@@ -1,0 +1,9 @@
+# Application dependencies
+
+require:
+    - play
+    - play -> docviewer
+    - javax.xml.bind 2.3.0
+    - jaxb-api 2.3.0
+    - jaxb-core 2.3.0.1
+    - jaxb-impl 2.3.0

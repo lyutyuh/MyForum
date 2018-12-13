@@ -1,0 +1,76 @@
+#{extends 'main.html' /}
+
+<div id="breadcrumb">
+	<a href="@{Users.index}">Users</a> →
+</div>
+
+<h1 id="title">${user.name}</h1></br>
+        #{if user.isBanzhu}
+            <h2 style='color:red;'>
+                    I'm the Banzhu of ${user.getSupervisedForum()}. </br>
+            </h2>
+        #{/if}    
+        #{if user.isAdmin()}
+            <h2 style='color:red;'>
+                I'm the system administrator.</br>
+            </h2>
+        #{/if}
+<p class="light">
+	#{pluralize size:user.postsCount, word:'post' /} in #{pluralize size:user.topicsCount, word:'topic' /} (some of these posts may have been removed...) </br>
+	Registration Date : ${user.registrationDate} </br>
+    Level: ${user.postsCount / 10} </br>
+	Date of Birth : ${user.dateOfBirth} </br>
+	Gender : ${user.gender} </br>
+	Banzhu : ${user.isBanzhu} </br>
+	Administrator : ${user.isAdmin()}
+</p>
+
+<p>${user.toXML()}</p>
+
+#{if user.recentsPosts}
+	<h2>Recents posts ...</h2>
+
+	#{list items:user.recentsPosts, as:'post'}
+        #{if !post.deleted}
+            #{showPost arg:post, showTopic:true, canLike:false /}
+        #{/if}
+	#{/list}
+#{/if}
+
+#{else}
+	<h2>No post by this user</h2>
+#{/else}
+
+
+#{if connected?.admin && connected.id != user.id}
+<form action="@{Users.delete(user.id)}" method="POST">
+	<div id="youreadmin">
+		Administrator options
+	</div>
+
+	<div class="box">
+		<h2>Delete Users</h2>	
+			<input type="submit" value="Confirm deletion" id="confirmDeletion" />
+	</div>
+</form>
+#{/if}
+
+#{if connected?.admin}
+</br></br></br></br></br></br>
+<p style="color: purple;font-size: 20pt">Assign Banzhu</p>
+#{list items:forums, as:'forum'}
+    #{if !forum.deleted}
+		<tr>
+			<td>
+				<h1><a href="@{Forums.show(forum.id)}">${forum.name}</a></h1>
+				<blockquote>
+					Description: ${forum.description}
+				</blockquote>
+                <form action="@{Users.promote(user.id, forum.id)}" method="POST">                
+                    <input type="submit" value="Assign banzhu" id="assignBanzhu" />
+                </form>
+			</td>
+		</tr>
+    #{/if}
+#{/list}
+#{/if}
