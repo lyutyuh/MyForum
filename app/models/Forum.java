@@ -150,20 +150,18 @@ public class Forum extends Model {
     }
     
     public Topic getHottestTopic(){
-        // Topic tmp = Topic.find("select t from Topic t where t.forum=?1 and not t.deleted=1 order by max(select p.postedAt from t, Post p where p.topic=?1) desc", this).first();
-        List <Topic> tmp = Topic.findAll();
-        Topic ans = null;
-        Long diff = (long) 0;
-        for (Topic t:tmp){            
-            if(t.forum.id==this.id){
-                Long sth = t.hotness();
-                if( (!t.deleted && sth > diff) || diff==0){
-                    diff = sth;
-                    ans = t;
-                }
-            }
+        
+
+        String quer = "select t, max(p.postedAt-t.postedAt) as posttime from Post p, Topic t where p.topic=t and t.forum=?1 and not t.deleted=1 group by t.id order by posttime asc"; 
+        List<?> sqlresult = Topic.find(quer, this).fetch();
+
+        for (int i=0;i<sqlresult.size();++i){
+            Object[] row = (Object[]) sqlresult.get(i);
+            Topic ttt = (Topic) row[0];
+            Double ddd = (Double) row[1];
+            return ttt;
         }
-        return ans;
+        return null;
     }
 
     public List<Topic> getAboveAverageViewTopic(){
