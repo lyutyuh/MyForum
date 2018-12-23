@@ -1,18 +1,18 @@
 #{extends 'main.html' /}
 
 <div id="breadcrumb">
-	<a href="@{Forums.index}">Forums</a> →
+	<a href="@{Forums.index}">板块</a> →
 </div>
 
 <h1 id="title" style="font-size:22pt;">${forum.name}</h1>
 <p class="light">
 	<strong>
-		#{pluralize size:forum.postsCount, word:'post' /} in #{pluralize size:forum.topicsCount, word:'topic' /}
+		在 ${forum.topicsCount} 个话题中共有 ${forum.postsCount}个帖子
 	</strong>
 </p>
 
 <p>
-    Banzhu: ${banzhuName}
+    版主: ${banzhuName}
 </p>
 
 
@@ -27,11 +27,11 @@
 <table id="topics-list">
 	<thead>
 		<tr>
-			<th>Topics</th>
-            <th>Posted by</th>
-			<th>Posts</th>
-			<th>Views</th>
-			<th>Last Post</th>
+			<th>话题</th>
+            <th>发布者</th>
+			<th>回帖数</th>
+			<th>浏览量</th>
+			<th>最近回复</th>
 		</tr>
 	</thead>
 	#{list items:forum.getTopics(page ?: 1, pageSize), as:'topic'}
@@ -54,21 +54,21 @@
                 </td>
                 <td class="infos">
                     ${topic.lastPost.postedAt.since()} <br /> 
-                    by <strong>${topic.lastPost.postedBy.name}</strong> (<a href="@{Topics.show(topic.forum.id, topic.id, topic.postsCount.page(pageSize))}">view</a>)
+                    by <strong>${topic.lastPost.postedBy.name}</strong> (<a href="@{Topics.show(topic.forum.id, topic.id, topic.postsCount.page(pageSize))}">查看</a>)
                 </td>
             </tr>
         #{/if}
 	#{/list}
 </table></br></br></br></br>
 
-<h1 style="font-size:22pt;">Active Users of <span style="color:red;">${forum.name}</span></h1>
-<button onclick="hideShow()" id="showhide">Show active users!</button>
+<h1 style="font-size:22pt;"> <span style="color:red;">${forum.name}</span>的活跃用户</h1>
+<button onclick="hideShow()" id="showhide">显示</button>
 <div id="rankedUser" style="display:none;">
     <table id="active-user-by-posts">
         <thead>
             <tr>
-                <th>User</th>
-                <th>Posts</th>
+                <th>用户</th>
+                <th>发帖数</th>
             </tr>
         </thead>
         #{list items:forum.getActiveUsersByPost(), as:'user'}
@@ -87,14 +87,14 @@
 </div></br></br></br></br>
 
 
-<h1 style="font-size:22pt;">Hottest Topic of <span style="color:red;">${forum.name}</span></h1>
-<button onclick="hideShow_hottest_topic()" id="showhide_hottest_topic">Show hottest topic!</button>
+<h1 style="font-size:22pt;"> <span style="color:red;">${forum.name}</span>的热门话题</h1>
+<button onclick="hideShow_hottest_topic()" id="showhide_hottest_topic">显示</button>
 <div id="hottest-topic" style="display:none;">
     <table id="active-user-by-posts">
             <thead>
                 <tr>
-                    <th>Topic</th>
-                    <th>Started by</th>
+                    <th>话题</th>
+                    <th>发布者</th>
                 </tr>
             </thead>
             #{list items:forum.getHottestTopic(), as:'topic'}
@@ -111,14 +111,14 @@
 </div></br></br></br></br>
 
 
-<h1 style="font-size:22pt;">Above-average-view Topics of <span style="color:red;">${forum.name}</span></h1>
-<button onclick="hideShow_many_views()" id="showhide_many_views">Show above average view topics!</button>
+<h1 style="font-size:22pt;"><span style="color:red;">${forum.name}</span>超过平均浏览量的话题</h1>
+<button onclick="hideShow_many_views()" id="showhide_many_views">显示</button>
 <div id="many-views" style="display:none;">
     <table id="many-view-topics">
             <thead>
                 <tr>
-                    <th>Topic</th>
-                    <th>Views</th>
+                    <th>话题</th>
+                    <th>浏览量</th>
                 </tr>
             </thead>
             #{list items:forum.getAboveAverageViewTopic(), as:'topic'}
@@ -135,14 +135,14 @@
 </div></br></br></br></br>
 
 
-<h1 style="font-size:22pt;">Above-average-reply Users of <span style="color:red;">${forum.name}</span></h1>
-<button onclick="hideShow_above_average()" id="showhide_above_average">Show above average users!</button>
+<h1 style="font-size:22pt;"><span style="color:red;">${forum.name}</span>获得回复数超过平均的用户</h1>
+<button onclick="hideShow_above_average()" id="showhide_above_average">显示</button>
 <div id="above-average" style="display:none;">
     <table id="above-average-users">
             <thead>
                 <tr>
-                    <th>User</th>
-                    <th>Replies</th>
+                    <th>用户</th>
+                    <th>回复数</th>
                 </tr>
             </thead>
             #{list items:forum.getAboveAverageUser(), as:'user'}

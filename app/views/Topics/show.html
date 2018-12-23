@@ -1,13 +1,13 @@
 #{extends 'main.html' /}
 
 <div id="breadcrumb">
-	<a href="@{Forums.index}">Forums</a> → <a href="@{Forums.show(topic.forum.id)}">${topic.forum.name}</a>
+	<a href="@{Forums.index}">所有板块</a> → <a href="@{Forums.show(topic.forum.id)}">${topic.forum.name}</a>
 </div>
 
 <h1 id="title">${topic.subject}</h1>
 <p class="light">
 	<strong>
-		#{pluralize size:topic.postsCount, word:'post' /} by #{pluralize size:topic.voicesCount, word:'user' /} 
+	 ${topic.voicesCount} 个用户发表了 ${topic.postsCount} 个帖子 
 	</strong>
 </p>
 
@@ -21,19 +21,19 @@
 
 #{if connected}
 	<p>
-		<a class="action" href="@{Topics.reply(topic.forum.id, topic.id)}">Reply</a>
+		<a class="action" href="@{Topics.reply(topic.forum.id, topic.id)}">回复</a>
 	</p>
 #{/if}
 
 #{if connected?.admin}
 	<div id="youreadmin">
-		Administrator options
+		管理员操作
 	</div>
 
 	<div class="box">
-		<h2>Delete this topic</h2>
+		<h2>删除话题</h2>
 		<form action="@{Topics.delete(topic.forum.id, topic.id)}" method="POST">
-			<input type="submit" value="Delete it !" id="deleteIt" />
+			<input type="submit" value="删除" id="deleteIt" />
 		</form>
 	</div>	
 #{/if}

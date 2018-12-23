@@ -1,12 +1,12 @@
 #{extends 'main.html' /}
 
 <div id="breadcrumb">
-	<a href="@{Forums.index}">Forums</a> → <a href="@{Forums.show(topic.forum.id)}">${topic.forum.name}</a> → <a href="@{Topics.show(topic.forum.id, topic.id)}">${topic.subject}</a>
+	<a href="@{Forums.index}">板块</a> → <a href="@{Forums.show(topic.forum.id)}">${topic.forum.name}</a> → <a href="@{Topics.show(topic.forum.id, topic.id)}">${topic.subject}</a>
 </div>
 
-<h1 id="title">Reply to «${topic.subject}»</h1>
+<h1 id="title">回复 «${topic.subject}»</h1>
 <p class="light">
-	by ${connected.name}
+	用户名 ${connected.name}
 </p>
 
 <form id="post" action="@{Topics.createReply(topic.forum.id, topic.id)}" method="POST" accept-charset="${_response_encoding}">
@@ -14,6 +14,6 @@
 		<textarea name="content" rows="8" cols="40" id="contentText"></textarea>
 	</p>
 	<p class="buttons">
-		<input type="submit" value="Post the reply" id="postReply" /> or <a class="action" href="@{Topics.show(topic.forum.id, topic.id)}">cancel</a>
+		<input type="submit" value="回复" id="postReply" /> 或 <a class="action" href="@{Topics.show(topic.forum.id, topic.id)}">取消</a>
 	</p>
 </form>

@@ -81,10 +81,10 @@ public class Forums extends Application {
         notFoundIfNull(forum);        
         String banzhuName = "";
         if (forum.banzhuId == -1){
-            banzhuName = "This forum has no Banzhu yet.";
+            banzhuName = "这个版块还没有版主";
         }else{
             User u = User.findById(forum.banzhuId);
-            banzhuName = "Banzhu of this forum is " + u.name + ".";
+            banzhuName = "这个板块的版主是 " + u.name;
         }
         render(forum, page, banzhuName);
     }

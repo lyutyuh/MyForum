@@ -1,23 +1,21 @@
 #{extends 'main.html' /}
 
-<h1 id="title">Signup</h1>
-<p class="light">
-	We will send you a link for confirmation
-</p>
+<h1 id="title">注册</h1>
+<p></p>
 
 <form id="signup" action="@{Application.register}" method="POST" accept-charset="${_response_encoding}">
 	<p>
-		<label>Email</label>
+		<label>邮箱</label>
 		<input type="text" name="email" value="${flash.email}" id="email" />
 		<span class="error">#{error 'email' /}</span>
 	</p>
 	<p>
-		<label>Display name</label>
+		<label>昵称</label>
 		<input type="text" name="name" value="${flash.name}" id="name" />
 		<span class="error">#{error 'name' /}
 	</p>
 	<p>
-		<label>Password</label>
+		<label>密码</label>
 		<p class="light">
 			Enter your desired password twice. It must be at least 5 characters.
 		</p>
@@ -29,14 +27,14 @@
 		</div>
 	</p>
 	<p>
-		<label>Gender</label>
+		<label>性别</label>
 		<input type="radio" name="gender" value="male" id="gender_m" /> male
 		<input type="radio" name="gender" value="female" id="gender_f" /> female
 		<span class="error">#{error 'gender' /}
 	</p>
 
 	<p>
-		<label>Date of birth</label>
+		<label>生日</label>
 		<input type="date" id="dateOfBirth" name="dateOfBirth"
 								value="2000-01-01"
 								min="1912-01-01" max="2018-12-31">

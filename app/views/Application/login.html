@@ -1,6 +1,6 @@
 #{extends 'main.html' /}
 
-<h1 id="title">Login</h1>
+<h1 id="title">登录</h1>
 <p class="light">
     
 </p>
@@ -14,11 +14,11 @@
 
 <form id="login" action="@{Application.authenticate}" method="POST" accept-charset="${_response_encoding}">
 	<p>
-		<label>Email</label>
+		<label>邮箱</label>
 		<input type="text" name="email" value="${flash.email}" id="email" />
 	</p>
 	<p>
-		<label>Password</label>
+		<label>密码</label>
 		<input type="password" name="password" value="" id="password" />
 	</p>
 	<p class="buttons">

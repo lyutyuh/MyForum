@@ -7,28 +7,28 @@
 <h1 id="title">${user.name}</h1></br>
         #{if user.isBanzhu}
             <h2 style='color:red;'>
-                    I'm the Banzhu of ${user.getSupervisedForum()}. </br>
+                    我是 ${user.getSupervisedForum()} 的版主 </br>
             </h2>
         #{/if}    
         #{if user.isAdmin()}
             <h2 style='color:red;'>
-                I'm the system administrator.</br>
+                我是系统管理员 </br>
             </h2>
         #{/if}
 <p class="light">
-	#{pluralize size:user.postsCount, word:'post' /} in #{pluralize size:user.topicsCount, word:'topic' /} (some of these posts may have been removed...) </br>
-	Registration Date : ${user.registrationDate} </br>
-    Level: ${user.postsCount / 10} </br>
-	Date of Birth : ${user.dateOfBirth} </br>
-	Gender : ${user.gender} </br>
-	Banzhu : ${user.isBanzhu} </br>
-	Administrator : ${user.isAdmin()}
+	在 ${user.topicsCount} 个话题中发表了 ${user.postsCount} 个帖子  </br>
+	注册时间 : ${user.registrationDate} </br>
+    等级: ${user.postsCount / 10} </br>
+	生日 : ${user.dateOfBirth} </br>
+	性别 : ${user.gender} </br>
+	版主 : ${user.isBanzhu} </br>
+	管理员 : ${user.isAdmin()}
 </p>
 
 <p>${user.toXML()}</p>
 
 #{if user.recentsPosts}
-	<h2>Recents posts ...</h2>
+	<h2>最近发表了</h2>
 
 	#{list items:user.recentsPosts, as:'post'}
         #{if !post.deleted}
@@ -38,18 +38,18 @@
 #{/if}
 
 #{else}
-	<h2>No post by this user</h2>
+	<h2>他还没有发过帖子</h2>
 #{/else}
 
 
 #{if connected?.admin && connected.id != user.id}
 <form action="@{Users.delete(user.id)}" method="POST">
 	<div id="youreadmin">
-		Administrator options
+		管理员操作
 	</div>
 
 	<div class="box">
-		<h2>Delete Users</h2>	
+		<h2>删除用户</h2>	
 			<input type="submit" value="Confirm deletion" id="confirmDeletion" />
 	</div>
 </form>

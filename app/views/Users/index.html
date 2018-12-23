@@ -1,6 +1,6 @@
 #{extends 'main.html' /}
 
-<h1 id="title">Users</h1>
+<h1 id="title">所有用户</h1>
 <p class="light">
 	#{pluralize size:nbUsers, word:'user' /}
 </p>
@@ -11,8 +11,8 @@
 <table id="users-list">
 	<thead>
 		<tr>
-			<th class="main">User name</th>
-			<th class="infos">Posts</th>
+			<th class="main">用户名</th>
+			<th class="infos">发帖数</th>
 		</tr>
 	</thead>
 	#{list items:users, as:'user'}

@@ -114,6 +114,9 @@ public class Forum extends Model {
         for (Long lll:allPostnum){
             ans += lll;
         }
+        if (allPostnum.size() <= 0){
+            return (long) 999999999;
+        }
         ans /= allPostnum.size();
         return ans;
     }
@@ -123,6 +126,9 @@ public class Forum extends Model {
         Long ans = (long) 0;
         for (Long lll:allPostnum){
             ans += lll;
+        }
+        if (allPostnum.size() <= 0){
+            return (long) 999999999;
         }
         ans /= allPostnum.size();
         return ans;
@@ -168,7 +174,11 @@ public class Forum extends Model {
         for(int i = 0;i < tmp_len.size();++i){
             avg += (long) tmp_len.get(i);            
         }
-        avg /= tmp_len.size();
+        if(tmp_len.size() <= 0){
+            avg = (long) 99999999;
+        }
+        else
+            avg /= tmp_len.size();
         
         List <Topic> toret = new ArrayList<>();
         for(int i = 0;i < tmp_len.size();++i){
