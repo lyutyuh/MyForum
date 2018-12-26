@@ -8,6 +8,7 @@ import models.*;
 
 public class Forums extends Application {
 
+
     public static void index(int comparing, Long Aid, Long Bid) {
         if (comparing == 0){
 
@@ -26,6 +27,7 @@ public class Forums extends Application {
             List topics_byViews = Topic.find("order by views desc").fetch(10);
 
             List topics_byReplies = Topic.find("select t from Post p, Topic t where p.topic.id = t.id group by t.id order by count(distinct p.id) desc").fetch(10);
+
 
             long topicsCount = Topic.countExist();
             long postsCount = Post.countExist();

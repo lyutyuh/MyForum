@@ -80,6 +80,10 @@ public class Application extends Controller {
         render();
     }
 
+    public static void searchUser(String name){
+        Users.searchResult(name);
+    }
+
     public static void authenticate(String email, String password) {
         User user = User.findByEmail(email);
         if (user == null || !user.checkPassword(password)) {

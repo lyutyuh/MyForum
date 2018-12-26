@@ -51,7 +51,7 @@ public class Forum extends Model {
     
     public void dismissBanzhu(){
         this.banzhuId = (long) -1;
-        System.out.println(this.banzhuId);
+        // System.out.println(this.banzhuId);
         this.save();
         return;
     }

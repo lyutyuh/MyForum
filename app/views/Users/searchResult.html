@@ -7,13 +7,7 @@
 
 #{pagination page:page ?: 1, size:nbUsers /}
 
-<form id="search" action="@{Application.searchUser}" method="POST" accept-charset="${_response_encoding}">
-		<p>
-			<label>昵称</label>
-			<input type="text" name="name" value="username" id="username" />
-		</p>
-		
-</form>
+
 
 <table id="users-list">
 	<thead>
@@ -21,15 +15,15 @@
 			<th class="main">用户名</th>
 			<th class="infos">发帖数</th>
 		</tr>
-	</thead>
-	#{list items:users, as:'user'}
-        #{if !user.deleted}
+    </thead>
+    #{list items:result, as:'user'}    
+        #{if !user.deleted}        
 		<tr>
 			<td class="main">
 				<a href="@{Users.show(user.id)}">${user.name}</a>
 			</td>
 			<td class="infos">
-				${user.postsCount}
+				11
 			</td>
 		</tr>
         #{/if}

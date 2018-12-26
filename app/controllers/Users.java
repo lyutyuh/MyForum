@@ -12,11 +12,33 @@ public class Users extends Application {
         render(nbUsers, users, page);
     }
 
+    public static void searchResult(String name) {        
+        List result = User.find("select u from User u where u.name=?1", name).fetch();
+        
+        for(Object u:result){
+            User uu = (User) u;
+            System.out.println(uu.name);
+            System.out.println(uu.id);
+        }
+        Long nbUsers = (long)result.size();
+        render(nbUsers, result);
+    }
+
     public static void show(Long id) {
         User user = User.findById(id);
         List forums = Forum.findAll();
         notFoundIfNull(user);
-        render(forums, user);
+
+        List<Log> susp_users = Topic.find("select l from Log l").fetch();
+
+
+        for (int i=0;i<susp_users.size();++i){
+            Log lg = susp_users.get(i);
+            Date ttt = lg.log_created_time;
+            long ddd = (long) lg.user_id;
+        }
+        
+        render(forums, user, susp_users);
     }
 
     public static void delete(Long id){

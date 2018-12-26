@@ -14,7 +14,8 @@
             <h2 style='color:red;'>
                 我是系统管理员 </br>
             </h2>
-        #{/if}
+		#{/if}	
+
 <p class="light">
 	在 ${user.topicsCount} 个话题中发表了 ${user.postsCount} 个帖子  </br>
 	注册时间 : ${user.registrationDate} </br>
@@ -25,8 +26,32 @@
 	管理员 : ${user.isAdmin()}
 </p>
 
-<p>${user.toXML()}</p>
 
+
+#{if connected?.admin && user.isAdmin()}
+<h2 style='color:red;'>水军日志（管理员可见）</h2>
+<p>
+	<table id="users-list">
+	<thead>
+		<tr>
+			<th class="main">触发时间</th>
+			<th class="infos">用户名</th>
+		</tr>
+	</thead>
+	#{list items:susp_users, as:'su'}
+	<tr>
+		<td>
+			${su.log_created_time} 
+		</td>
+		<td>
+			${user.findById(su.user_id).name}
+		</td>
+	</tr>
+	#{/list}	
+	</table>
+</p>
+
+#{/if}
 #{if user.recentsPosts}
 	<h2>最近发表了</h2>
 
