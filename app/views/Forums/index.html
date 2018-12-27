@@ -1,14 +1,15 @@
 #{extends 'main.html' /}
 
-<h1 id="title">Welcome</h1>
-<h2 style="color:red">请联系管理员 (admin@pku.edu.cn) 以加入新的版块</h2>
+<h1 id="title"><img src="/public/images/logo.png" width="40" height="40" alt="pku logo"></img>欢迎来到未名论坛</h1>
+<p></p>
+<h3 style="color:red">请联系管理员 (admin@pku.edu.cn) 以加入新的版块</h3>
 <p class="light">
 	<strong>
 		在 ${forumCount} 个板块的 ${topicsCount} 个话题中共有 ${postsCount} 个帖子 
 	</strong>
 </p></br></br></br></br>
 
-#{if compres}
+#{if isComparing}
 <p style="color: green;font-size: 20pt;">
     #{list items:compres, as:'user'}
         ${user.name} 
@@ -78,6 +79,7 @@
     </table></br></br></br></br>
 </div>
 
+<p></p>
 <h1 style="font-size: 32pt; color:blue"> 板块 </h1>
 <table id="forums-list">
 	<thead>
@@ -112,6 +114,7 @@
 </table>
 
 
+<p></p>
 <!-- select those who posted more in forum A than B -->
 <h1 style="font-size: 32pt; color:green"> 查找在A板块发帖多于B板块的用户</h1>
 

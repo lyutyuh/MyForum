@@ -13,6 +13,7 @@
 	<thead>
 		<tr>
 			<th class="main">用户名</th>
+			<th class="infos">导出XML</th>
 			<th class="infos">发帖数</th>
 		</tr>
     </thead>
@@ -23,7 +24,10 @@
 				<a href="@{Users.show(user.id)}">${user.name}</a>
 			</td>
 			<td class="infos">
-				11
+				<a href="@{Users.showXML(user.id)}">导出</a>				
+			</td>
+			<td class="infos">
+				${user.postsCount}
 			</td>
 		</tr>
         #{/if}

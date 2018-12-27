@@ -8,7 +8,7 @@ CREATE TRIGGER posttrigger AFTER INSERT ON Post
 			SET @recenttenmin := (SELECT COUNT(*) FROM Post as p
 									WHERE p.postedAt >= (NOW() - INTERVAL 10 MINUTE)
 									AND p.postedBy_id=NEW.postedBy_id);
-			IF (@recenttenmin >= 3) THEN
+			IF (@recenttenmin >= 10) THEN
 				INSERT INTO Log VALUES(NOW(), NEW.postedBy_id, 0);
 			END IF;				
 		END

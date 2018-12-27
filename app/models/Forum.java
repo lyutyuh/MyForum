@@ -33,6 +33,9 @@ public class Forum extends Model {
     
     public Forum delete(){
         this.deleted = true;
+        for (Topic t: topics){
+            t.delete();
+        }
         save();
         return this;
     }
@@ -92,7 +95,6 @@ public class Forum extends Model {
         return User.find("select u from User u, Post p where p.topic.forum=?1 and p.postedBy=u and not p.deleted=1 and not u.deleted=1  group by u.id order by count(distinct p.id) desc", this).fetch();
     }
 
-    // TODO CHECK
     public List<User> getActiveUsersByPost() {
         return User.find("select u from User u, Post p where p.topic.forum=?1 and p.postedBy=u and not p.deleted=1 and not u.deleted=1  group by u.id order by count(distinct p.id) desc", this).fetch(10);
     }

@@ -15,7 +15,7 @@
                 #{if connected}
                     <p>
                         欢迎！ <a class="connectedUser" href="@{Users.show(connected.id)}">${connected.name}</a>
-                        (<a href="@{Application.logout}">Logout</a>)
+                        (<a href="@{Application.logout}">退出登录</a>)
                     </p>
                 #{/if}
                 #{else}
@@ -46,7 +46,7 @@
             <div id="footer">
                 <p>
                     <img src="/public/images/logo.png" width="40" height="40" alt="pku logo"></img> 2018-2019秋 数据库概论实习作业 
-                    ----------刘天宇 皮若言  王泽华
+                    ----------刘天宇  皮若言  王泽华
                 </p>
             </div>
         

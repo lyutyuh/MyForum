@@ -2,14 +2,14 @@
 
 <h1 id="title">所有用户</h1>
 <p class="light">
-	#{pluralize size:nbUsers, word:'user' /}
+	#{pluralize size:exists, word:'user' /}
 </p>
 
 #{pagination page:page ?: 1, size:nbUsers /}
 
 <form id="search" action="@{Application.searchUser}" method="POST" accept-charset="${_response_encoding}">
 		<p>
-			<label>昵称</label>
+			<label>按用户名搜索</label>
 			<input type="text" name="name" value="username" id="username" />
 		</p>
 		

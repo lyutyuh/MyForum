@@ -8,12 +8,13 @@ public class Users extends Application {
 
     public static void index(Integer page) {
         List users = User.findAll(page == null ? 1 : page, pageSize);
-        Long nbUsers = User.countExist();
-        render(nbUsers, users, page);
+        Long nbUsers = User.count();
+        Long exists = User.countExist();
+        render(nbUsers, exists, users, page);
     }
 
     public static void searchResult(String name) {        
-        List result = User.find("select u from User u where u.name=?1", name).fetch();
+        List result = User.find("select u from User u where u.name=?1 and u.deleted=0", name).fetch();
         
         for(Object u:result){
             User uu = (User) u;
@@ -22,6 +23,11 @@ public class Users extends Application {
         }
         Long nbUsers = (long)result.size();
         render(nbUsers, result);
+    }
+
+    public static void showXML(Long id) {    
+        User user = User.findById(id);
+        render(user);
     }
 
     public static void show(Long id) {
@@ -46,7 +52,7 @@ public class Users extends Application {
         notFoundIfNull(user);
         user.delete();
         user.save();
-        flash.success("The user(s) has been deleted!");
+        flash.success("这个用户已被删除。");
         index(null);
 
     }
@@ -74,7 +80,7 @@ public class Users extends Application {
         
         user.promoteToBanzhu(forum);
         forum.assignBanzhu(user);
-        flash.success("The user has been promoted to Banzhu!");
+        flash.success("这个用户被任命为版主！");
         index(null);
 
     }

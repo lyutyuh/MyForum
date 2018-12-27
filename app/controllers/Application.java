@@ -87,15 +87,19 @@ public class Application extends Controller {
     public static void authenticate(String email, String password) {
         User user = User.findByEmail(email);
         if (user == null || !user.checkPassword(password)) {
-            flash.error("Bad email or bad password");
+            flash.error("账号或密码错误");
             flash.put("email", email);
             login();
         } else if (user.needConfirmation != null) {
-            flash.error("This account is not confirmed");
+            flash.error("账号未验证");
             flash.put("notconfirmed", user.needConfirmation);
             flash.put("email", email);
             login();
+        } else if (user.deleted){
+            flash.error("此账号已经被删除！");
+            login();
         }
+        
         connect(user);
         flash.success("Welcome back %s !", user.name);
         Users.show(user.id);
@@ -122,7 +126,12 @@ public class Application extends Controller {
         login();
     }
 
-    public static void compareAB(Long Aid, Long Bid){        
+    public static void compareAB(Long Aid, Long Bid){
+        if(Aid == null || Bid==null){
+            Aid = (long)1;
+            Forums.index(0 , Aid, Bid);
+        }     
+        
         Forums.index(1, Aid, Bid);
         return;
     }

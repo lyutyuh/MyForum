@@ -18,9 +18,9 @@
 
 <p class="light">
 	在 ${user.topicsCount} 个话题中发表了 ${user.postsCount} 个帖子  </br>
-	注册时间 : ${user.registrationDate} </br>
+	注册时间 : ${user.registrationDate.format('MM/dd, yyyy hh:mma')} </br>
     等级: ${user.postsCount / 10} </br>
-	生日 : ${user.dateOfBirth} </br>
+	生日 : ${user.dateOfBirth.format('MM/dd, yyyy hh:mma')} </br>
 	性别 : ${user.gender} </br>
 	版主 : ${user.isBanzhu} </br>
 	管理员 : ${user.isAdmin()}
@@ -41,7 +41,7 @@
 	#{list items:susp_users, as:'su'}
 	<tr>
 		<td>
-			${su.log_created_time} 
+			${su.log_created_time.format('MM/dd, yyyy hh:mma')} 
 		</td>
 		<td>
 			${user.findById(su.user_id).name}
@@ -50,6 +50,7 @@
 	#{/list}	
 	</table>
 </p>
+<p></p>
 
 #{/if}
 #{if user.recentsPosts}
@@ -75,27 +76,27 @@
 
 	<div class="box">
 		<h2>删除用户</h2>	
-			<input type="submit" value="Confirm deletion" id="confirmDeletion" />
+			<input type="submit" value="删除" id="confirmDeletion" />
 	</div>
 </form>
 #{/if}
 
 #{if connected?.admin}
 </br></br></br></br></br></br>
-<p style="color: purple;font-size: 20pt">Assign Banzhu</p>
+<p style="color: purple;font-size: 20pt">任命版主</p>
 #{list items:forums, as:'forum'}
     #{if !forum.deleted}
 		<tr>
 			<td>
 				<h1><a href="@{Forums.show(forum.id)}">${forum.name}</a></h1>
 				<blockquote>
-					Description: ${forum.description}
-				</blockquote>
-                <form action="@{Users.promote(user.id, forum.id)}" method="POST">                
-                    <input type="submit" value="Assign banzhu" id="assignBanzhu" />
+					描述: ${forum.description}
+				</blockquote><p></p>
+                <form action="@{Users.promote(user.id, forum.id)}" method="POST">        
+                    <input type="submit" value="任命" id="assignBanzhu" />
                 </form>
 			</td>
 		</tr>
-    #{/if}
+    #{/if}<p></p><p></p>
 #{/list}
 #{/if}

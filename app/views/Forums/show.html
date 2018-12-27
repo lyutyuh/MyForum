@@ -18,7 +18,7 @@
 
 #{if connected}
 	<div id="newTopic">
-		<a class="action" href="@{Topics.post(forum.id)}">Post a new topic</a>
+		<a class="action" href="@{Topics.post(forum.id)}">发表新话题</a>
 	</div>
 #{/if}
 
@@ -162,7 +162,7 @@
 #{if connected?.admin || connected?.isBanzhuOf == forum.id}
     #{if connected?.admin}
         <div id="youreadmin">
-            Administrator options
+            管理员选项
         </div>
     #{/if}
     #{if connected.isBanzhuOf == forum.id}
@@ -172,20 +172,22 @@
     #{/if}
 
 	<div class="box">
-		<h2>Delete this forum</h2>
+		<h2>删除板块</h2>
 		<form action="@{Forums.delete(forum.id)}" method="POST">
-			<input type="submit" value="Delete it !" id="deleteIt" />
+			<input type="submit" value="删除" id="deleteIt" />
 		</form>
 	</div>
 
 	<div class="box">
-		<h2>Change forum name</h2>
+		<h2>更改名称</h2>
 		<form action="@{Forums.modify(forum.id)}" method="POST">
-			<textarea type="text" value="NewTopicName" name="ChangeName"></textarea>
-			<input type="submit" value="Change name" id="changeIt" />
+			<textarea type="text" value="新名称" name="ChangeName"></textarea>
+			<input type="submit" value="更改" id="changeIt" />
 		</form>
 	</div>
 #{/if}
+
+
 
 <script>
 function hideShow() {

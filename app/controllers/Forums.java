@@ -11,7 +11,6 @@ public class Forums extends Application {
 
     public static void index(int comparing, Long Aid, Long Bid) {
         if (comparing == 0){
-
             List forums = Forum.findAll();
             List topics_byViews = Topic.find("order by views desc").fetch(10);
     
@@ -57,7 +56,8 @@ public class Forums extends Application {
                     compres.add(faPostUser.get(i));
                 }
             }
-            render(forums, topicsCount, postsCount, forumCount, topics_byViews, topics_byReplies, compres, fa, fb);
+            long isComparing = 1;
+            render(forums, topicsCount, postsCount, forumCount, topics_byViews, topics_byReplies, compres, isComparing, fa, fb);
         }
     }
 

@@ -63,7 +63,7 @@ public class reducedUser{
     @XmlElement(name="BasicInfo")
     basicInfo bi;
 
-    class postInfo{
+    class topicInfo{
 
         @XmlElement
         long no;
@@ -83,7 +83,7 @@ public class reducedUser{
         @XmlElement(name="Views")
         int views;
 
-        public postInfo(Topic t){
+        public topicInfo(Topic t){
             this.no = t.id;
             this.forum = t.forum.name;
             this.subject = t.subject;
@@ -95,9 +95,9 @@ public class reducedUser{
 
     }
 
-    @XmlElementWrapper(name = "Posts")
-    @XmlElement(name="Post")
-    List<postInfo> pi;
+    @XmlElementWrapper(name = "Topics")
+    @XmlElement(name="Topic")
+    List<topicInfo> ti;
 
 
     class replyInfo{
@@ -140,27 +140,67 @@ public class reducedUser{
     List<replyInfo> ri;
 
 
+
+
+
+    class postsInfo{
+
+        @XmlElement
+        long no;
+
+        @XmlElement(name="Forum")
+        String forum;
+
+        @XmlElement(name="Topic")
+        String topic;
+
+        @XmlElement(name="Content")
+        String content;
+
+        @XmlElement(name="Time")
+        String time; 
+
+        @XmlElement(name="Likes")
+        Long likes;
+
+        public postsInfo(Post p){
+            this.no = p.id;
+            this.forum = p.topic.forum.name;
+            this.topic = p.topic.subject;            
+            this.content = p.content;
+            this.time = p.postedAt.toGMTString();
+            this.likes = p.likes;
+        }
+
+    }
+
+    @XmlElementWrapper(name = "Posts")
+    @XmlElement(name="Posted")
+    List<postsInfo> pi;
+
+
     public reducedUser(User u){
         bi = new basicInfo(u);
-        pi = new ArrayList<>();
+        ti = new ArrayList<>();
         ri = new ArrayList<>();
+        pi = new ArrayList<>();
 
-        List<Topic> allTopics = Topic.findAll();
+        List<Topic> allTopics = Topic.find("select t from Topic t where t.postedBy=?1 and t.deleted=0", u).fetch(); // Topic.find("select t from Topic t where t.postedBy=?1", u)
         for(Topic t: allTopics){
-            if(t.postedBy.id == u.id){
-                this.pi.add(new postInfo(t));
-            }
+            this.ti.add(new topicInfo(t));
+            
         }
 
-        List<Post> allPosts = Post.findAll();
+        List<Post> allReplies = Post.find("select p from Post p where p.topic.postedBy=?1 and p.deleted=0", u).fetch(); // Post.find("select p from Post p where p.topic.postedBy=?1", u).fetch();
+        for(Post p: allReplies){
+            this.ri.add(new replyInfo(p));            
+        }
+
+
+        List<Post> allPosts = Post.find("select p from Post p where p.postedBy=?1 and p.deleted=0", u).fetch(); // Post.find("select p from Post p where p.topic.postedBy=?1", u).fetch();
         for(Post p: allPosts){
-            if(p.topic.postedBy.id == u.id){
-                this.ri.add(new replyInfo(p));
-            }
+            this.pi.add(new postsInfo(p));            
         }
-
-
-
     }
 
 
